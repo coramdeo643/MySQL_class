@@ -45,7 +45,8 @@ select e.emp_no, e.last_name,
 	max(s.salary) as max_salary
 from employees as e
 inner join salaries as s on e.emp_no = s.emp_no
-group by e.emp_no;
+group by e.emp_no
+limit 3;
 
 -- 4. 각 부서의 최고 급여를 받는 사람을 출력
 -- DB change
@@ -81,24 +82,37 @@ INSERT INTO tb_employees (name, department, salary) VALUES
 
 select * from tb_employees;
 -- employee_id | name | department | salary
--- 부서별 최고 급여를 출력
+-- 5 부서별 최고 급여를 출력
 select department, max(salary)
 from tb_employees
 group by department;
 
--- 직원 수가 4명 이상인 부서 출력
+-- 6 직원 수가 4명 이상인 부서 출력
 select department, count(*) as emp_count
 from tb_employees
 group by department
 having emp_count >= 4;
 
--- 부서별 평균 급여와 직원수를 출력
-select department, round(avg(salary),0) as avg_salary, count(*) as emp_count
+-- 7 부서별 평균 급여와 직원수를 출력
+select department, round(avg(salary),-3) as avg_salary, count(*) as emp_count
 from tb_employees
 group by department;
 
+-- 8 부서별 평균연봉이 5천만원 이상인 부서 조회
+select department, round(avg(salary),0) as avg_salary
+from tb_employees
+group by department
+having avg_salary >= 50000000;
 
+-- 9 부서별 연봉 합계가 2억 이상 부서 조회
+select department, sum(salary) as sum_salary
+from tb_employees
+group by department
+having sum_salary >= 200000000;
 
-
-
+-- 10 부서별 최소 연봉 4천만 미만 부서 조회
+select department, min(salary) as min_salary
+from tb_employees
+group by department
+having min_salary < 40000000;
 
