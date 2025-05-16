@@ -26,3 +26,10 @@ from employees as e
 inner join salaries as s on e.emp_no = s.emp_no
 group by e.emp_no
 limit 5;
+
+-- any
+SELECT gender
+FROM employees 
+WHERE emp_no = ANY (SELECT emp_no FROM dept_manager WHERE to_date like '9999%');
+
+select * from employees;
